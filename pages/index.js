@@ -7,7 +7,7 @@ const inter = Inter({ subsets: ["latin"] });
 export default function Home() {
 
   const router = useRouter();
-  const {data,status} = useSession();
+  const {status} = useSession();
   if(status == 'Loading') return <h1>...Loading</h1>
 
   return (
@@ -29,5 +29,5 @@ export default function Home() {
         
       </div>
     </main>
-  );
+  )
 }
