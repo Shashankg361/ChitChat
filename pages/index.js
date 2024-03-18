@@ -1,6 +1,7 @@
 import { Inter } from "next/font/google";
 import {useSession,signIn,signOut} from 'next-auth/react';
 import { useRouter } from "next/router";
+import { connectDb } from "@/Database/handleDatabase";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -31,3 +32,10 @@ export default function Home() {
     </main>
   )
 }
+
+export async function getServerSideProps(){
+  await connectDb();
+  return{
+    props:{}
+  }
+} 
