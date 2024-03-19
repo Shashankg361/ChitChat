@@ -2,13 +2,18 @@ import { Inter } from "next/font/google";
 import {useSession,signIn,signOut} from 'next-auth/react';
 import { useRouter } from "next/router";
 import { connectDb } from "@/Database/handleDatabase";
+import { useContext, useEffect } from "react";
+import { pool } from "./_app";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
 
+  const {data,status} = useSession();
+  const {setUserData} = useContext(pool);
+
   const router = useRouter();
-  const {status} = useSession();
+
   if(status == 'Loading') return <h1>...Loading</h1>
 
   return (

@@ -1,12 +1,14 @@
 import { pool } from "@/pages/_app"
 import axios from "axios";
-import { useContext, useState } from "react"
+import { useSession } from "next-auth/react";
+import { useContext, useEffect, useState } from "react"
 
-export default function FriendsList({data}){
+export default function FriendsList(){
     const {userdata} = useContext(pool);
+    const {data} = useSession();
     const [dataList , setdataList] = useState();
     console.log("UsersDatatat",data);
-    const email = data?.user.email;
+    const email = data?.user?.email;
     async function friendsList(){
         const response = await axios.post("/api/getFriendsList",{email});
         //alert(response.data.Message);
@@ -16,7 +18,9 @@ export default function FriendsList({data}){
         // datalist = List.data;
         // datalist && console.log("Listed",datalist);
     }
-    friendsList();
+    useEffect(()=>{
+        data && friendsList();
+    },[])
 
     return(
         <>
