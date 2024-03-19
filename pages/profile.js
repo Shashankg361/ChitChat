@@ -13,7 +13,7 @@ export default function Profile(){
 
     if(status == 'authenticated') {
         console.log("running");
-        AddNewUser(data);
+        //AddNewUser(data);
         return (
             <Chat data={data} />
         )
