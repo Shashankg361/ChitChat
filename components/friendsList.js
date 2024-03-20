@@ -4,16 +4,16 @@ import { useSession } from "next-auth/react";
 import { useContext, useEffect, useState } from "react"
 
 export default function FriendsList(){
-    const {userdata} = useContext(pool);
+    //const {userdata} = useContext(pool);
     const {data} = useSession();
     const [dataList , setdataList] = useState();
-    console.log("UsersDatatat",data);
+    //console.log("UsersDatatat",data);
     const email = data?.user?.email;
     async function friendsList(){
         const response = await axios.post("/api/getFriendsList",{email});
         //alert(response.data.Message);
         const List = response.data;
-        console.log("response",List.data);
+        //console.log("response",List.data);
         setdataList(List.data);
         // datalist = List.data;
         // datalist && console.log("Listed",datalist);

@@ -10,12 +10,18 @@ const inter = Inter({ subsets: ["latin"] });
 export default function Home({data}) {
 
   const {status} = useSession();
-  const {setUserData} = useContext(pool);
-  setUserData(data);
-
+  const {setUserData,userdata} = useContext(pool);
   const router = useRouter();
+  useEffect(()=>{
+    setUserData(data);
+    console.log("at index",data);
+  },[data]);
+  userdata && console.log("index",userdata);
 
   if(status == 'Loading') return <h1>...Loading</h1>
+  if(status == 'authenticated'){
+    router.push('/profile');
+  }
 
   return (
     <main
@@ -27,7 +33,7 @@ export default function Home({data}) {
         </div>
       <div>
           
-          <button onClick={() => signIn('google', { callbackUrl: 'http://localhost:3000/profile' })} className="p-2 font-semibold text-xl border-xl rounded-xl bg-stone-200  hover:opacity-80">
+          <button onClick={() => signIn('google')} className="p-2 font-semibold text-xl border-xl rounded-xl bg-stone-200  hover:opacity-80">
             <div className="flex items-center">
               <h1>Login with google</h1> 
               <img src="/google.png" className="w-12 h-12 p-2"></img>
@@ -42,11 +48,12 @@ export default function Home({data}) {
 export async function getServerSideProps(){
   await connectDb();
   try{
-    const db = client.db("Users");
+    const db = client.db("User");
     const collection = db.collection("UserDets");
-    const data = collection.find().toArray();
+    const data = await collection.find().toArray();
+    console.log("at props",data);
     return{
-      props:{data}
+      props:{data : JSON.parse(JSON.stringify(data))}
     }
   }catch(error){
     console.error("Error while retrieving data",error);

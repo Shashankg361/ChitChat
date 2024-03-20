@@ -6,10 +6,11 @@ import { useRouter } from 'next/router';
 import { useState , useEffect, useContext} from 'react';
 import { pool } from './_app';
 import FriendsList from '@/components/friendsList';
+import SendRequest from '@/components/sendRequest';
 
 export default function Profile(){
     const {userdata} = useContext(pool);
-    //userdata && console.log("UserDatata",userdata);
+    console.log("at profile",userdata);
     
     return(
         <div className='bg-white flex flex-col p-1 text-black h-dvh'>
@@ -24,7 +25,7 @@ export default function Profile(){
                         <h1 className='font-semibold text-lg cursor-pointer'>Request</h1>
                     </div>
                 </div>
-                <h1>okay</h1>
+                <SendRequest />
             </div>
         </div>
     )

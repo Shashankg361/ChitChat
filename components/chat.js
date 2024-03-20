@@ -10,10 +10,11 @@ export default function Chat(){
     const [toggle,setToggle] = useState(false);
 
     const {data,status} = useSession();
-    const {userdata,setUserData} = useContext(pool);
+    const {setUser} = useContext(pool);
     useEffect(()=>{
+        data && setUser(data?.user); 
         data && AddNewUser(data);
-    })
+    },[data])
     
     if(status == 'loading') return <div>{"...Loading"}</div>
 
