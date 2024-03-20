@@ -2,7 +2,7 @@ import { Inter } from "next/font/google";
 import {useSession,signIn,signOut} from 'next-auth/react';
 import { useRouter } from "next/router";
 import { client, connectDb } from "@/Database/handleDatabase";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useMemo } from "react";
 import { pool } from "./_app";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -19,9 +19,12 @@ export default function Home({data}) {
   userdata && console.log("index",userdata);
 
   if(status == 'Loading') return <h1>...Loading</h1>
-  if(status == 'authenticated'){
-    router.push('/profile');
-  }
+  const use = useMemo(()=>{
+    if(status == 'authenticated'){
+      router.push('/profile');
+    }
+  },[status]);
+  
 
   return (
     <main

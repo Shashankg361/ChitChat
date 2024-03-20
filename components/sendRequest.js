@@ -23,6 +23,7 @@ export default function SendRequest(){
             const data = await response.data;
             alert(data.Message);
             setValid(true);
+            persent=null;
         }else{
             setValid(false);
         }

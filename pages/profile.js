@@ -1,16 +1,28 @@
 import Chat from '@/components/chat';
-import {useUser} from '@auth0/nextjs-auth0/client'
-import axios from 'axios';
-import { useSession,signOut } from 'next-auth/react';
-import { useRouter } from 'next/router';
 import { useState , useEffect, useContext} from 'react';
 import { pool } from './_app';
 import FriendsList from '@/components/friendsList';
 import SendRequest from '@/components/sendRequest';
+import GetRequest from '@/components/requests';
 
 export default function Profile(){
     const {userdata} = useContext(pool);
+    const [showComponent,setShowComponent] = useState();
     console.log("at profile",userdata);
+
+    const show = (showComponent)=>{
+        switch(showComponent){
+            case 'request':
+                return <GetRequest />
+                break;
+            case 'sendRequest':
+                return <SendRequest />
+                break;
+            default :
+                return <h1>showChat</h1>
+                break;
+        }
+    }
     
     return(
         <div className='bg-white flex flex-col p-1 text-black h-dvh'>
@@ -21,12 +33,14 @@ export default function Profile(){
                         <FriendsList />
                     </div>
                     <div className='flex flex-col p-5 items-center'>
-                        <h1 className='font-semibold text-lg cursor-pointer'>Send Request</h1>
-                        <h1 className='font-semibold text-lg cursor-pointer'>Request</h1>
+                        <h1 className='font-semibold text-lg cursor-pointer' onClick={()=>{setShowComponent('sendRequest')}}>Send Request</h1>
+                        <h1 className='font-semibold text-lg cursor-pointer' onClick={()=>{setShowComponent('request')}}>Request</h1>
                     </div>
                 </div>
-                <SendRequest />
+                {show(showComponent)}
             </div>
         </div>
     )
 }
+//<SendRequest />
+

@@ -8,11 +8,19 @@ export default async function sendResuest(req,res){
 
         const db = client.db(`${mail_id}`);
         const collection = db.collection("Request");
-        try{
-            await collection.insertOne(user);
-            res.status(200).json({Message:"Successfully request sended"});
-        }catch(error){
-            res.status(200).json({Message:`Internal error ${error}`})
+        if(!await collection.findOne({email:Request}) && (Request != user.email) ){
+            try{
+                await collection.insertOne(user);
+                res.status(200).json({Message:"Successfully request sended"});
+            }catch(error){
+                res.status(200).json({Message:`Internal error ${error}`})
+            }
+        }else if(Request == user.email){
+            res.status(200).json({Message:"Cannot send request to yourself"})
         }
+        else{
+            res.status(200).json({Message:'alreday sended request'});
+        }
+        
     }
 } 
