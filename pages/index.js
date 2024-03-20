@@ -1,16 +1,17 @@
 import { Inter } from "next/font/google";
 import {useSession,signIn,signOut} from 'next-auth/react';
 import { useRouter } from "next/router";
-import { connectDb } from "@/Database/handleDatabase";
+import { client, connectDb } from "@/Database/handleDatabase";
 import { useContext, useEffect } from "react";
 import { pool } from "./_app";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export default function Home() {
+export default function Home({data}) {
 
-  const {data,status} = useSession();
+  const {status} = useSession();
   const {setUserData} = useContext(pool);
+  setUserData(data);
 
   const router = useRouter();
 
@@ -40,7 +41,17 @@ export default function Home() {
 
 export async function getServerSideProps(){
   await connectDb();
-  return{
-    props:{}
+  try{
+    const db = client.db("Users");
+    const collection = db.collection("UserDets");
+    const data = collection.find().toArray();
+    return{
+      props:{data}
+    }
+  }catch(error){
+    console.error("Error while retrieving data",error);
+    return{
+      props:{data:[]}
+    }
   }
 } 

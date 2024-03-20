@@ -14,10 +14,14 @@ export default function Profile(){
     return(
         <div className='bg-white flex flex-col p-1 text-black h-dvh'>
             <Chat />
-            <div className="w-full h-full flex justify-between">
-                <div className="border-r-2 p-5 flex flex-col w-80">
-                    <div>
+            <div className="w-full h-full flex ">
+                <div className="border-r-2 p-5 pr-0 flex flex-col w-80">
+                    <div className='h-72 overflow-y-scroll pr-2 border-b-2'>
                         <FriendsList />
+                    </div>
+                    <div className='flex flex-col p-5 items-center'>
+                        <h1 className='font-semibold text-lg cursor-pointer'>Send Request</h1>
+                        <h1 className='font-semibold text-lg cursor-pointer'>Request</h1>
                     </div>
                 </div>
                 <h1>okay</h1>
