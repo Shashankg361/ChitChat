@@ -2,7 +2,9 @@ import { pool } from "@/pages/_app";
 import { faCheck, faX } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
-import { useContext } from "react";
+import { useContext, useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 import useSWR from "swr"
 
 async function fetcher([_,user]){
@@ -20,23 +22,43 @@ async function fetcher([_,user]){
 export default function GetRequest(){
     const {user} = useContext(pool);
     const {data,error} = useSWR((['request',user]),fetcher);
-    console.log("gandu",data)
-    return(
-        <div className="flex w-full items-center justify-center">
-            <div className="border-2 rounded-lg shadow-2xl shadow-black p-4">
-                {data && data.map((element)=>{
-                    return(
-                        <div className="w-full border-2 p-2 rounded-lg shadow-sm flex justify-between items-center h-16 ">
-                        <img src={element.image} className="rounded-full w-12 h-12 border-2"></img>
-                        <h1>{element.name}</h1>
-                        <div className="flex">
-                            <button className="border-2 bg-green-600 rounded-full p-2 mr-2"><FontAwesomeIcon icon={faCheck}/></button>
-                            <button className="border-2 bg-red-600 rounded-full p-2 "><FontAwesomeIcon icon={faX}/></button>
-                        </div>
-                        </div>)
-                })}
-            </div>
-        </div>
+    //console.log("gandu",data)
+
+    async function acceptor(addFriend){
+        try{const response = await axios.post("api/addfriend",{user,addFriend});
+            const data = response.data;
+            toast.success(`${data.Message}`);
+        }catch(error){
+            toast.error('Error while fetching data')
+        }
+    }
+
+    const reject = async ()=>{
+        try{
+            const response = await axios.post('/api/Rejcted',{user,addFriend});
+            toast('Rejected');
+        }catch(error){
+            toast.error('Error occured');
+        }
         
+    }
+
+    return(
+            <div className="flex w-full items-center justify-center">
+                <ToastContainer className={"absolute top-10 left-1/2"}/>
+                <div className="border-2 rounded-lg shadow-2xl shadow-black p-4">
+                    {data && data.map((element)=>{
+                        return(
+                            <div className="w-full border-2 p-2 rounded-lg shadow-sm flex justify-between items-center h-16 ">
+                            <img src={element.image} className="rounded-full w-12 h-12 border-2"></img>
+                            <h1>{element.name}</h1>
+                            <div className="flex">
+                                <button className="border-2 bg-green-600 rounded-full p-2 mr-2" onClick={()=>{acceptor(element)}}><FontAwesomeIcon icon={faCheck}/></button>
+                                <button className="border-2 bg-red-600 rounded-full p-2 " onClick={reject}><FontAwesomeIcon icon={faX}/></button>
+                            </div>
+                            </div>)
+                    })}
+                </div>
+            </div>
     )
 }
