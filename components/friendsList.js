@@ -24,7 +24,6 @@ export default function FriendsList(){
 
     return(
         <>
-            <h1>Hello</h1>
             {dataList?.map((element)=>{
                 return<div className="w-full border-2 p-2 rounded-lg shadow-sm flex items-center h-16 ">
                     <img src={element.image} className="rounded-full w-12 mr-5 h-12 border-2"></img>

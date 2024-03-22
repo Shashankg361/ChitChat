@@ -40,14 +40,21 @@ export default function GetRequest(){
         }catch(error){
             toast.error('Error occured');
         }
-        
+    }
+
+    if(data?.length <= 0){
+        return(
+            <div className="flex w-full items-center justify-center">
+                <div className="font-semibold text-xl">No Requests</div>
+            </div>
+        )
     }
 
     return(
             <div className="flex w-full items-center justify-center">
                 <ToastContainer className={"absolute top-10 left-1/2"}/>
                 <div className="border-2 rounded-lg shadow-2xl shadow-black p-4">
-                    {data && data.map((element)=>{
+                    {data?.length>0 && data.map((element)=>{
                         return(
                             <div className="w-full border-2 p-2 rounded-lg shadow-sm flex justify-between items-center h-16 ">
                             <img src={element.image} className="rounded-full w-12 h-12 border-2"></img>
