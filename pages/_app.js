@@ -8,12 +8,17 @@ export default function App({ Component, pageProps }) {
   const [userdata,setUserData] = useState();
   const [user,setUser] =useState();
   const [isClient,setIsClient] = useState(false);
+  const [updateFriendsList,setUpdateFriendsList] = useState(false);
+  const [showComponent,setShowComponent] = useState();
+  const [chatToUser,setChatToUser] = useState();
   useEffect(()=>{
     setIsClient(true);
   },[]);
   return (
     <SessionProvider session={pageProps.session}>
-      <pool.Provider value={{userdata,setUserData,user,setUser}}>
+      <pool.Provider value={{userdata,setUserData,user,setUser,updateFriendsList,setUpdateFriendsList,showComponent,setShowComponent
+        ,chatToUser,setChatToUser,
+      }}>
         {isClient && <ToastContainer />}
         <Component {...pageProps} />
       </pool.Provider> 

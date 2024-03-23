@@ -4,10 +4,10 @@ import { pool } from './_app';
 import FriendsList from '@/components/friendsList';
 import SendRequest from '@/components/sendRequest';
 import GetRequest from '@/components/requests';
+import ChattingScreen from '@/components/chattingScreen';
 
 export default function Profile(){
-    const {userdata} = useContext(pool);
-    const [showComponent,setShowComponent] = useState();
+    const {userdata,showComponent,setShowComponent} = useContext(pool);
     console.log("at profile",userdata);
 
     const show = (showComponent)=>{
@@ -37,10 +37,11 @@ export default function Profile(){
                         <h1 className='font-semibold text-lg cursor-pointer' onClick={()=>{setShowComponent('request')}}>Request</h1>
                     </div>
                 </div>
-                {show(showComponent)}
+                <ChattingScreen />
             </div>
         </div>
     )
 }
 //<SendRequest />
+//{show(showComponent)}
 
