@@ -18,10 +18,12 @@ export default async function chatingSocket(req,res){
                 const changeStream = collection.watch();
 
                 changeStream.on('change',(newData)=>{
-
+                    if(newData.operationType === 'insert'){
+                        socket.emit(`${collectionName}`,JSON.stringify(newData.fullDocument))
+                    }
                 })
             }catch(error){
-                
+
             }
         })
 
