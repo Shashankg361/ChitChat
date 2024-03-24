@@ -22,22 +22,28 @@ export default function ChattingScreen(){
         chatToUser && getChat();
     },[chatToUser]);
 
-    const socket = async ()=>{
-        await axios(`api/chatingSocket?collectionName=${chatToUser?.collection}`);
+    const socket = async (chatToUser)=>{
+        console.log("websocket",chatToUser),
+        await axios('api/chatingSocket',{
+            params:{
+                collectionName:chatToUser?.collection,
+            }
+        });
         const socket = io();
 
-        socket.on('connection',()=>{
+        socket.on('connect',()=>{
             toast.success('Connected');
         })
 
         socket.on(`${chatToUser?.collection}`,(message)=>{
+            console.log("websocket message",message);
             setChats([...chats,message]);
         })
     }
 
     useEffect(()=>{
-        socket();
-    },[])
+        chatToUser && socket(chatToUser);
+    },[chatToUser])
 
     const submit = async(formData)=>{
         const storeMessage = {
@@ -45,6 +51,8 @@ export default function ChattingScreen(){
             message:formData.Message,
             from:user?.name,
         }
+        console.log("sending message",storeMessage);
+        console.log("ChatoUser",chatToUser);
 
         try{
             const response = await axios.post('api/sendMessage',{storeMessage,collectionName:chatToUser?.collection});

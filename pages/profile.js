@@ -18,6 +18,9 @@ export default function Profile(){
             case 'sendRequest':
                 return <SendRequest />
                 break;
+            case 'chattingScreen':
+                return <ChattingScreen />
+                break;
             default :
                 return <h1>showChat</h1>
                 break;
@@ -37,11 +40,11 @@ export default function Profile(){
                         <h1 className='font-semibold text-lg cursor-pointer' onClick={()=>{setShowComponent('request')}}>Request</h1>
                     </div>
                 </div>
-                <ChattingScreen />
+                {show(showComponent)}
             </div>
         </div>
     )
 }
 //<SendRequest />
 //{show(showComponent)}
-
+//<ChattingScreen />
