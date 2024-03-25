@@ -3,7 +3,6 @@ import { Server } from "socket.io";
 
 export default async function chatingSocket(req,res){
     const collectionName = req.query.collectionName;
-    console.log("collname",collectionName);
     if(res.socket.server.io){
         console.log('server is already running');
     }else{
@@ -11,14 +10,14 @@ export default async function chatingSocket(req,res){
         const io = new Server(res.socket.server);
         res.socket.server.io = io;
 
-        io.on('connect',async(socket)=>{
-            console.log("working");
+        io.on('connect',socket=>{
+            console.log('connected');
             //const collectionName = socket.handshake.query.collectionName;
-            
-
             try{
-                const db = client.db("chat");
+                console.log("workinggg");
+                const db = client.db('Chat');
                 const collection = db.collection(`${collectionName}`);
+                console.log("collname",collectionName);
                 const changeStream = collection.watch();
 
                 changeStream.on('change',(newData)=>{

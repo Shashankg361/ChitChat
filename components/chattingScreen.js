@@ -15,8 +15,9 @@ export default function ChattingScreen(){
     async function getChat(){
         const response =await axios.post('api/getChat',{collectionName:`${chatToUser?.collection}`});
         const data = response.data;
-        setChats(data);
+        setChats(data.data);
     }
+    chats && console.log("chats",chats);
 
     useEffect(()=>{
         chatToUser && getChat();
@@ -37,7 +38,7 @@ export default function ChattingScreen(){
 
         socket.on(`${chatToUser?.collection}`,(message)=>{
             console.log("websocket message",message);
-            setChats([...chats,message]);
+            setChats([...chats,JSON.parse(message)]);
         })
     }
 
