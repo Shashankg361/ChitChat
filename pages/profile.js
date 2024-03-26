@@ -28,7 +28,7 @@ export default function Profile(){
     }
     
     return(
-        <div className='bg-white flex flex-col p-1 text-black h-dvh'>
+        <div className='bg-white flex flex-col p-1 overflow-y-scroll text-black h-dvh'>
             <Chat />
             <div className="w-full h-full flex ">
                 <div className="border-r-2 p-5 pr-0 flex flex-col w-80">

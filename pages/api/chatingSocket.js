@@ -3,6 +3,10 @@ import { Server } from "socket.io";
 
 export default async function chatingSocket(req,res){
     const collectionName = req.query.collectionName;
+    console.log("req...",req.query.collectionName);
+    const db = client.db('Chat');
+    var collection = db.collection(`${req.query.collectionName}`);
+     
     if(res.socket.server.io){
         console.log('server is already running');
     }else{
@@ -14,23 +18,21 @@ export default async function chatingSocket(req,res){
             console.log('connected');
             //const collectionName = socket.handshake.query.collectionName;
             try{
-                console.log("workinggg");
-                const db = client.db('Chat');
-                const collection = db.collection(`${collectionName}`);
-                console.log("collname",collectionName);
+                
+                console.log("collname",req.query.collectionName);
                 const changeStream = collection.watch();
 
                 changeStream.on('change',(newData)=>{
+                    console.log("workinggg");
                     console.log("onchange",newData);
                     if(newData.operationType === 'insert'){
-                        socket.emit(`${collectionName}`,JSON.stringify(newData.fullDocument))
+                        socket.emit(`${req.query.collectionName}`,JSON.stringify(newData));
                     }
                 });
             }catch(error){
                 console.log(error);
             }
         });
-
     }
     res.end();
 }
