@@ -7,37 +7,37 @@ import { io } from "socket.io-client";
 export default function ShowChats(){
     const {chatToUser,user,chats} = useContext(pool);
     const [messages,setMessages] = useState(chats);
+    var socket = undefined;
 
     useEffect(()=>{
         setMessages(chats);
     },[chats])
 
-    const socket = async ()=>{
+    const socketfunc = async ()=>{
         console.log("websocket",chatToUser);
         // console.log("looking for chat",chat);
-        await axios('api/chatingSocket',{
-            params:{
-                collectionName:chatToUser?.collection,
+        //await axios();
+        socket = io('http://localhost:8080',{
+            query:{
+                name: `${chatToUser.collection}`,
             }
         });
-        const socket = io();
 
         socket.on('connect',()=>{
             toast.success('Connected');
         })
 
         socket.on(`${chatToUser?.collection}`,(message)=>{
-            //console.log("running",count++);
+            console.log("running at show chat",chatToUser?.collection);
             const newMeassage = JSON.parse(message);
             console.log("websocket message",newMeassage);
-            if(newMeassage.operationType === "insert"){
-            setMessages([...messages,newMeassage.fullDocument]);
-            }
+            console.log("added to",messages);
+            setMessages([...messages,newMeassage]);
         })
     }
 
     useEffect(()=>{
-       chatToUser && socket();
+       (chatToUser != undefined) && socketfunc();
     },[chatToUser])
 
     return(
