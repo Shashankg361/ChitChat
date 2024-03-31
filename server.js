@@ -23,6 +23,7 @@ io.on('connection', async(socket) => {
 
         changeStream.on('change',(newData)=>{
             console.log("at change",get);
+            console.log("Called",newData.fullDocument);
             if(newData.operationType == 'insert'){
                 socket.emit(`${get}`,JSON.stringify(newData.fullDocument));
             }

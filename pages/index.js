@@ -12,6 +12,7 @@ export default function Home({data}) {
   const {status} = useSession();
   const {setUserData,userdata} = useContext(pool);
   const router = useRouter();
+  
   useEffect(()=>{
     setUserData(data);
     console.log("at index",data);
@@ -24,7 +25,6 @@ export default function Home({data}) {
       router.push('/profile');
     }
   },[status]);
-  
 
   return (
     <main

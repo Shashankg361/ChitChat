@@ -6,16 +6,22 @@ import { io } from "socket.io-client";
 
 export default function ShowChats(){
     const {chatToUser,user,chats} = useContext(pool);
-    const [messages,setMessages] = useState(chats);
+    const [Messages,setMessages] = useState([]);
+    //var y="";
     var socket = undefined;
 
     useEffect(()=>{
-        setMessages(chats);
-    },[chats])
+        setMessages([]);
+    },[chatToUser])
+
+    // useEffect(()=>{
+    //     setMessages(chats);
+    //     console.log("chats Chnaged",chats,"See Messages to",messages);
+    // },[chats])
 
     const socketfunc = async ()=>{
         console.log("websocket",chatToUser);
-        // console.log("looking for chat",chat);
+        //console.log("looking for chat",chat);
         //await axios();
         socket = io('http://localhost:8080',{
             query:{
@@ -24,26 +30,32 @@ export default function ShowChats(){
         });
 
         socket.on('connect',()=>{
+            console.log("At connection time",Messages);
             toast.success('Connected');
         })
 
         socket.on(`${chatToUser?.collection}`,(message)=>{
-            console.log("running at show chat",chatToUser?.collection);
-            const newMeassage = JSON.parse(message);
-            console.log("websocket message",newMeassage);
-            console.log("added to",messages);
-            setMessages([...messages,newMeassage]);
+            const newMessage = JSON.parse(message);
+            console.log("newM",newMessage);
+            if((Messages?.filter(element=>element._id==newMessage._id)).length<=0){
+                setMessages(prevMessages => [...prevMessages, newMessage]);
+            }
         })
     }
 
     useEffect(()=>{
+        (chatToUser != undefined) && console.log("at UseEffect with sokcetFUNC",chatToUser);
        (chatToUser != undefined) && socketfunc();
-    },[chatToUser])
+    },[chatToUser]);
+
+    useEffect(()=>{
+        console.log("Message change",Messages);
+    },[Messages]);
 
     return(
         <div className="mb-2 overflow-y-scroll">
             <ul>
-                {messages?.map((element,index)=>{
+                {Messages?.map((element,index)=>{
                     if(element.from === user.name){
                         return<>
                             <li key={index} className="bg-green-700 text-black">{element.message}</li>

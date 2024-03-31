@@ -2,7 +2,7 @@ import { faArrowRightFromBracket, faRightFromBracket } from "@fortawesome/free-s
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { signOut, useSession } from "next-auth/react";
 import { useContext, useEffect, useState } from "react";
-import FriendsList from "./friendsList";
+//import FriendsList from "./friendsList";
 import { pool } from "@/pages/_app";
 import axios from "axios";
 
