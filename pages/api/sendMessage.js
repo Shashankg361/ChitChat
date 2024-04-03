@@ -9,7 +9,7 @@ export default async function sendMessage(req,res){
 
         try{
             await collecction.insertOne(storeMessage);
-            res.status(200).json({Meessage:"Send"});
+            res.status(200).json({Message:"Send"});
         }catch(error){
 
             res.status(500).json({Message:"error occured"});

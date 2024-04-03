@@ -24,16 +24,17 @@ export default function ChattingScreen(){
 
     const submit = async(formData)=>{
         const storeMessage = {
-            To: chatToUser?.name,
+            To: chatToUser?.email,
             message:formData.Message,
-            from:user?.name,
+            from:user?.email,
         }
         console.log("sending message",storeMessage);
         console.log("ChatoUser",chatToUser);
 
         try{
             const response = await axios.post('api/sendMessage',{storeMessage,collectionName:chatToUser?.collection});
-            toast.success(response.Message);
+            console.log("At Message response",response.data.Message);
+            toast.success(response.data.Message);
         }catch(error){
             toast.error(`Error occured ${error}`);
         }

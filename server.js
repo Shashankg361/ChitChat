@@ -13,25 +13,27 @@ const io = new Server(server, {
 io.on('connection', async(socket) => {
   console.log('a user connected');
 
-    const get = socket.handshake.query.name;
-    console.log("at Server",get);
-    
-    try{
+    // const collectionName = socket.handshake.query.name;
+
+    socket.on('user-changed',(collection)=>{
+      const collectionName = JSON.parse(collection);
+      console.log("at Server",collectionName);
+      try{
         const db = client.db('Chat');
-        const collection = db.collection(`${get}`);
+        const collection = db.collection(`${collectionName}`);
         const changeStream = collection.watch();
 
         changeStream.on('change',(newData)=>{
-            console.log("at change",get);
+            console.log("at change",collectionName);
             console.log("Called",newData.fullDocument);
             if(newData.operationType == 'insert'){
-                socket.emit(`${get}`,JSON.stringify(newData.fullDocument));
+                socket.emit(`${collectionName}`,JSON.stringify(newData.fullDocument));
             }
         })
-    }catch(error){
-        console.log("socket Internal error",error);
-    }
-
+      }catch(error){
+          console.log("socket Internal error",error);
+      }
+    });
   socket.on('disconnect', () => {
     console.log('user disconnected');
   });
