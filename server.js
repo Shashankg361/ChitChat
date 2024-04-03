@@ -13,6 +13,8 @@ const io = new Server(server, {
 io.on('connection', async(socket) => {
   console.log('a user connected');
 
+  let changeStream = null;
+
     // const collectionName = socket.handshake.query.name;
 
     socket.on('user-changed',(collection)=>{
@@ -21,13 +23,16 @@ io.on('connection', async(socket) => {
       try{
         const db = client.db('Chat');
         const collection = db.collection(`${collectionName}`);
-        const changeStream = collection.watch();
+
+        changeStream && changeStream.close();
+
+        changeStream = collection.watch();
 
         changeStream.on('change',(newData)=>{
             console.log("at change",collectionName);
             console.log("Called",newData.fullDocument);
             if(newData.operationType == 'insert'){
-                socket.emit(`${collectionName}`,JSON.stringify(newData.fullDocument));
+              socket.emit(`${collectionName}`,JSON.stringify(newData.fullDocument));
             }
         })
       }catch(error){

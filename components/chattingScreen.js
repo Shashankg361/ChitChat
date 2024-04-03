@@ -10,7 +10,7 @@ import ShowChats from "./showChats";
 
 export default function ChattingScreen(){
     const {chatToUser,user,chats,setChats} = useContext(pool);
-    const {register,handleSubmit} = useForm();
+    const {register,handleSubmit,setValue} = useForm();
 
     async function getChat(){
         const response =await axios.post('api/getChat',{collectionName:`${chatToUser?.collection}`});
@@ -28,8 +28,9 @@ export default function ChattingScreen(){
             message:formData.Message,
             from:user?.email,
         }
-        console.log("sending message",storeMessage);
-        console.log("ChatoUser",chatToUser);
+        setValue('Message','');
+        // console.log("sending message",storeMessage);
+        // console.log("ChatoUser",chatToUser);
 
         try{
             const response = await axios.post('api/sendMessage',{storeMessage,collectionName:chatToUser?.collection});
@@ -42,8 +43,8 @@ export default function ChattingScreen(){
     };
     
     return(<>
-        <div className="flex flex-col justify-between  w-full m-2">
-            <div>
+        <div className="flex flex-col justify-between w-full m-2">
+            <div className="h-[32rem]">
                 <ShowChats />
             </div>
 

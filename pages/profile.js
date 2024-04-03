@@ -28,7 +28,7 @@ export default function Profile(){
     }
     
     return(
-        <div className='bg-white flex flex-col p-1 overflow-y-scroll text-black h-dvh'>
+        <div className='bg-white flex flex-col p-1 overflow-hidden text-black h-screen w-auto'>
             <Chat />
             <div className="w-full h-full flex ">
                 <div className="border-r-2 p-5 pr-0 flex flex-col w-80">
@@ -40,7 +40,9 @@ export default function Profile(){
                         <h1 className='font-semibold text-lg cursor-pointer' onClick={()=>{setShowComponent('request')}}>Request</h1>
                     </div>
                 </div>
-                {show(showComponent)}
+                <div className='w-[40rem]'>
+                    {show(showComponent)}
+                </div>
             </div>
         </div>
     )
