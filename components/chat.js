@@ -19,7 +19,7 @@ export default function Chat(){
     if(status == 'loading') return <div>{"...Loading"}</div>
 
     if(status == 'authenticated') {
-        console.log("running");
+        //console.log("running");
         return(
             <div className="flex justify-between items-center border-b-2 shadow-sm w-full h-16 p-5">
                 <h1> Hi {data.user.name}</h1>

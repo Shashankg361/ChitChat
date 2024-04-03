@@ -2,7 +2,7 @@
 const {MongoClient} = require('mongodb');
 require('dotenv').config({path:'./env.local'});
 
-const uri = "mongodb+srv://shashankg361:shashankChitChat@chat.ugrfa3e.mongodb.net/";
+const uri = process.env.DATABASE_URI;
 const client = new MongoClient(uri);
 
 const connectDb = async()=>{

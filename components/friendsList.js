@@ -31,8 +31,8 @@ export default function FriendsList(){
 
     return(
         <>
-            {dataList?.map((element)=>{
-                return<div onClick={()=>setStatesFunc(element)} className="w-full border-2 p-2 rounded-lg shadow-sm flex items-center h-16 ">
+            {dataList?.map((element,index)=>{
+                return<div key={index} onClick={()=>setStatesFunc(element)} className="w-full border-2 p-2 rounded-lg shadow-sm flex items-center h-16 ">
                     <img src={element.image} className="rounded-full w-12 mr-5 h-12 border-2"></img>
                     <h1>{element.name}</h1>
                 </div>

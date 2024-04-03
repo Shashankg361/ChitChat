@@ -48,7 +48,7 @@ export default function ChattingScreen(){
                 <ShowChats />
             </div>
 
-            <div className="w-full">
+            <div className="w-full p-2">
                 <form className="flex" onSubmit={handleSubmit(submit)}>
                     <input type="text" className="border-2 border-black w-full p-2 rounded-lg" placeholder="Message..." {...register("Message")}></input>
                     <button type="submit" className="font-semibold text-lg"><FontAwesomeIcon icon={faPaperPlane}  className=""/>send</button>

@@ -8,7 +8,7 @@ import ChattingScreen from '@/components/chattingScreen';
 
 export default function Profile(){
     const {userdata,showComponent,setShowComponent} = useContext(pool);
-    console.log("at profile",userdata);
+    //console.log("at profile",userdata);
 
     const show = (showComponent)=>{
         switch(showComponent){
@@ -28,7 +28,7 @@ export default function Profile(){
     }
     
     return(
-        <div className='bg-white flex flex-col p-1 overflow-hidden text-black h-screen w-auto'>
+        <div className='bg-white flex flex-col p-1 overflow-y-scroll overflow-x-hidden text-black h-dvh w-auto'>
             <Chat />
             <div className="w-full h-full flex ">
                 <div className="border-r-2 p-5 pr-0 flex flex-col w-80">
@@ -40,13 +40,10 @@ export default function Profile(){
                         <h1 className='font-semibold text-lg cursor-pointer' onClick={()=>{setShowComponent('request')}}>Request</h1>
                     </div>
                 </div>
-                <div className='w-[40rem]'>
-                    {show(showComponent)}
-                </div>
+
+                {show(showComponent)}
+                
             </div>
         </div>
     )
 }
-//<SendRequest />
-//{show(showComponent)}
-//<ChattingScreen />
