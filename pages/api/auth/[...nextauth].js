@@ -4,15 +4,15 @@ export const authOptions = {
     providers:[
         GoogleProvider(
             {
-                clientId:process.env.NEXT_PUBLIC_GOOGLE_ID,
-                clientSecret:process.env.NEXT_PUBLIC_GOOGLE_SECRET
+                clientId:process.env.NEXTAUTH_GOOGLE_ID,
+                clientSecret:process.env.NEXTAUTH_GOOGLE_SECRET
             }
         )
     ],
     session:{
         strategy:'jwt',
         jwt:{
-            secret:process.env.NEXT_PUBLIC_SECRET,
+            secret:process.env.NEXTAUTH_SECRET,
         }
     },
 }
