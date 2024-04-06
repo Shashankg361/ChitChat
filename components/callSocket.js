@@ -3,8 +3,8 @@ import {  } from "axios";
 import { useContext, useEffect } from "react";
 import { io } from "socket.io-client";
 
-const callSocket = ()=>{
-    fetch('/api/socket');
+const callSocket = async()=>{
+    await fetch('/api/socket');
 };
 
 callSocket();
