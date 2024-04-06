@@ -1,10 +1,9 @@
 import { pool } from "@/pages/_app";
-//import axios from "axios";
 import { useContext, useEffect } from "react";
 import { io } from "socket.io-client";
 
-const callSocket = async()=>{
-    await fetch('/api/socket');
+const callSocket = async ()=>{
+    await fetch('/api/chatLine');
 };
 
 callSocket();
