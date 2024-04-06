@@ -7,7 +7,7 @@ import GetRequest from '@/components/requests';
 import ChattingScreen from '@/components/chattingScreen';
 
 export default function Profile(){
-    const {userdata,showComponent,setShowComponent} = useContext(pool);
+    const {userdata,showComponent,setShowComponent,toggle,setToggle} = useContext(pool);
     //console.log("at profile",userdata);
 
     const show = (showComponent)=>{
@@ -30,19 +30,19 @@ export default function Profile(){
     return(
         <div className='bg-white flex flex-col p-1 overflow-y-scroll overflow-x-hidden text-black h-dvh w-auto'>
             <Chat />
-            <div className="w-full h-full flex ">
-                <div className="border-r-2 p-5 pr-0 flex flex-col w-80">
+            <div className="w-full h-full flex">
+                <div className={`border-r-2 ${toggle?"block":"hidden"} md:block p-5 pr-0 flex flex-col w-80`}>
                     <div className='h-72 overflow-y-scroll pr-2 border-b-2'>
                         <FriendsList />
                     </div>
-                    <div className='flex flex-col p-5 items-center'>
+                    <div onClick={()=>setToggle(!toggle)} className='flex flex-col p-5 items-center'>
                         <h1 className='font-semibold text-lg cursor-pointer' onClick={()=>{setShowComponent('sendRequest')}}>Send Request</h1>
                         <h1 className='font-semibold text-lg cursor-pointer' onClick={()=>{setShowComponent('request')}}>Request</h1>
                     </div>
                 </div>
-
-                {show(showComponent)}
-                
+                <div className={`w-full h-full md:block ${toggle?"hidden":"block"}`}>
+                    {show(showComponent)}
+                </div>
             </div>
         </div>
     )

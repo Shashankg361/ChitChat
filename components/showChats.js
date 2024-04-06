@@ -2,14 +2,14 @@ import { pool } from "@/pages/_app";
 import { useContext, useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
 //import { io } from "socket.io-client";
-import { socket, socketfunc } from "./socket";
+import { socket, socketfunc } from "./callSocket";
 
 export default function ShowChats(){
     const {chatToUser,user,chats,setChats} = useContext(pool);
     const MessageContainer = useRef(null)
-
+    
     useEffect(()=>{
-        socketfunc(chatToUser,chats,setChats);
+        socketfunc(chatToUser,setChats);
     },[chatToUser])
 
     useEffect(()=>{
@@ -24,7 +24,9 @@ export default function ShowChats(){
     },[chatToUser,socket]);
     
     return(
+        
         <div ref={MessageContainer} className="mb-2 h-full overflow-y-scroll">
+            {!chats && <h1 className="font-bold text-lg text-black">Loading...</h1>}
             <ul>
                 {chats?.map((element,index)=>{
                     if(element.from === user.email){

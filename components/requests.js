@@ -55,7 +55,8 @@ export default function GetRequest(){
         )
     }
 
-    return(
+    return(<>
+            {!requestList && <div className="flex items-center"><h1 className="font-bold text-lg">Loading...</h1></div> }
             <div className="flex w-full items-center justify-center">
                 <ToastContainer className={"absolute top-10 left-1/2"}/>
                 <div className="border-2 rounded-lg shadow-2xl shadow-black p-4">
@@ -72,5 +73,6 @@ export default function GetRequest(){
                     })}
                 </div>
             </div>
+            </>
     )
 }

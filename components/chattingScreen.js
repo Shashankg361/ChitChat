@@ -44,7 +44,8 @@ export default function ChattingScreen(){
     
     return(<>
         <div className="flex flex-col justify-between w-full m-2">
-            <div className="h-[32rem]">
+            <div className="flex items-center bg-gray-200 p-2 rounded-lg"><img className="rounded-full w-12 mr-3 h-12 border-2" src={chatToUser.image}></img><h1>{chatToUser.name}</h1></div>
+            <div className="h-[26rem] bg-gray-200">
                 <ShowChats />
             </div>
 

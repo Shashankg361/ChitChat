@@ -1,14 +1,21 @@
 import { pool } from "@/pages/_app";
+import {  } from "axios";
 import { useContext, useEffect } from "react";
 import { io } from "socket.io-client";
-const PORT = process.env.NEXT_PUBLIC_PORT || 8080;
-export const socket = io(`https://chit-chat-shashank.vercel.app:${PORT}`);
+
+const callSocket = ()=>{
+    fetch('/api/socket');
+};
+
+callSocket();
+
+export const socket = io();
 
 socket.on('connect',()=>{
     console.log("Connected");
 })
 
-export async function socketfunc(chatToUser,chats,setChats){
+export async function socketfunc(chatToUser,setChats){
     
     socket.off(`${chatToUser?.collection}`);
     socket.on(`${chatToUser?.collection}`,(message)=>{
