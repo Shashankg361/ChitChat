@@ -14,6 +14,10 @@ const connectDb = async()=>{
     }
 }
 
+client.on('close',()=>{
+    console.log("client Disconnected");
+})
+
 module.exports={
     connectDb,
     client,
