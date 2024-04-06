@@ -1,7 +1,7 @@
 import { pool } from "@/pages/_app";
 import { useContext, useEffect } from "react";
 import { io } from "socket.io-client";
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.NEXT_PUBLIC_PORT || 8080;
 export const socket = io(`https://chit-chat-shashank.vercel.app:${PORT}`);
 
 socket.on('connect',()=>{
