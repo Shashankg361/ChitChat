@@ -14,11 +14,18 @@ const connectDb = async()=>{
     }
 }
 
-client.on('close',()=>{
-    console.log("client Disconnected");
-})
+const disconnectDb = async()=>{
+    try{
+        console.log('working');
+        await client.close()
+        console.log('disconnected');
+    }catch(error){
+        console.log('Error occured while disconnecting to database',error);
+    }
+}
 
 module.exports={
     connectDb,
     client,
+    disconnectDb,
 }

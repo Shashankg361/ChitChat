@@ -1,5 +1,5 @@
 // pages/api/socket.js
-import { client } from '@/Database/handleDatabase';
+import { client, disconnectDb } from '@/Database/handleDatabase';
 import { Server } from 'socket.io';
 
 export default async function handler(req, res) {
@@ -28,8 +28,8 @@ export default async function handler(req, res) {
               changeStream = collection.watch();
       
               changeStream.on('change',(newData)=>{
-                  console.log("at change",collectionName);
-                  console.log("Called",newData.fullDocument);
+                  //console.log("at change",collectionName);
+                  //console.log("Called",newData.fullDocument);
                   if(newData.operationType == 'insert'){
                     socket.emit(`${collectionName}`,JSON.stringify(newData.fullDocument));
                   }
@@ -38,13 +38,12 @@ export default async function handler(req, res) {
                 console.log("socket Internal error",error);
             }
           });
-        socket.on('disconnect', () => {
+        socket.on('disconnect', async () => {
+            await disconnectDb();
             console.log('user disconnected');
       });
     });
-
     res.socket.server.io = io;
   }
-
   res.end();
 }

@@ -24,10 +24,3 @@ export async function socketfunc(chatToUser,setChats){
         setChats(prevMessages => [...prevMessages, newMessage]);
     })
 }
-
-// export default function Socket(){
-
-//     const {chatToUser,setChats} = useContext(pool);
-
-    
-// }
