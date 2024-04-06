@@ -1,5 +1,5 @@
 // pages/api/socket.js
-import { client, disconnectDb } from '@/Database/handleDatabase';
+import { client } from '@/Database/handleDatabase';
 import { Server } from 'socket.io';
 
 export default async function handler(req, res) {
@@ -38,12 +38,13 @@ export default async function handler(req, res) {
                 console.log("socket Internal error",error);
             }
           });
-        socket.on('disconnect', async () => {
-            await disconnectDb();
+        socket.on('disconnect', () => {
             console.log('user disconnected');
       });
     });
+
     res.socket.server.io = io;
   }
+
   res.end();
 }
