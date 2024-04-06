@@ -3,6 +3,7 @@ import { client, disconnectDb } from '@/Database/handleDatabase';
 import { Server } from 'socket.io';
 
 export default async function handler(req, res) {
+  console.log("working");
   if (!res.socket.server.io) {
     const httpServer = res.socket.server;
     const io = new Server(httpServer, {
