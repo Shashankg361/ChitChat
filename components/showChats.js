@@ -29,13 +29,33 @@ export default function ShowChats(){
             {!chats && <h1 className="font-bold text-lg text-black">Loading...</h1>}
             <ul>
                 {chats?.map((element,index)=>{
+                    const date = new Date(element.Time);
+                    
+                    const hours = date.getHours();
+                    const minutes = date.getMinutes();
+
+                    const formattedHours = hours < 10 ? '0' + hours : hours;
+                    const formattedMinutes = minutes < 10 ? '0' + minutes : minutes;
+
+                    const timeString = `${formattedHours}:${formattedMinutes}`;
+
                     if(element.from === user.email){
                         return<>
-                            <li key={index} className="bg-green-300 p-2 w-fit m-2 border-2 border-black relative rounded-l-lg rounded-tr-lg text-black">{element.message}</li>
+                            <li key={index} className="bg-green-300 p-2 w-fit m-2 border-2 border-black relative rounded-l-lg rounded-tr-lg text-black">
+                                <div className=" grid ">
+                                    <h1>{element.message}</h1>
+                                    <h1 className="text-xs justify-self-end">{timeString && timeString}</h1>
+                                </div>
+                            </li>
                         </>
                     }else{
                         return<>
-                            <li key={index} className="bg-amber-200 p-2 w-fit m-2 border-2 border-black rounded-r-lg rounded-bl-lg text-black">{element.message}</li>
+                            <li key={index} className="bg-amber-200 p-2 w-fit m-2 border-2 border-black rounded-r-lg rounded-bl-lg text-black">
+                                <div className=" grid ">
+                                    <h1>{element.message}</h1>
+                                    <h1 className="text-xs justify-self-end">{timeString && timeString}</h1>
+                                </div>
+                            </li>
                         </>
                     }
                 })}

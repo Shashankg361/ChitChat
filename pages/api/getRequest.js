@@ -10,10 +10,10 @@ export default async function getRequest(req,res){
         const collection = db.collection("Request");
         try{
             const response = await collection.find().toArray();
-            console.log("data",response);
+            //console.log("data",response);
             res.status(200).json({data:response});
         }catch(error){
-            console.log("errorororo",error);
+            console.log("errorororo at getRequest",error);
             res.status(500).json({error});
         }
     }

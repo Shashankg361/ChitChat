@@ -19,7 +19,7 @@ export default async function handler(req, res) {
       
           socket.on('user-changed',(collection)=>{
             const collectionName = JSON.parse(collection);
-            console.log("at Server",collectionName);
+            //console.log("at Server",collectionName);
             try{
               const db = client.db('Chat');
               const collection = db.collection(`${collectionName}`);

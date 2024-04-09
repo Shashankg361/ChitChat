@@ -8,6 +8,8 @@ import { toast } from "react-toastify";
 import { io } from "socket.io-client";
 import ShowChats from "./showChats";
 
+const date = new Date();
+
 export default function ChattingScreen(){
     const {chatToUser,user,chats,setChats} = useContext(pool);
     const {register,handleSubmit,setValue} = useForm();
@@ -27,6 +29,7 @@ export default function ChattingScreen(){
             To: chatToUser?.email,
             message:formData.Message,
             from:user?.email,
+            Time:date,
         }
         setValue('Message','');
         // console.log("sending message",storeMessage);
@@ -45,7 +48,7 @@ export default function ChattingScreen(){
     return(<>
         <div className="flex flex-col justify-between w-full m-2">
             <div className="flex items-center bg-gray-200 p-2 rounded-lg"><img className="rounded-full w-12 mr-3 h-12 border-2" src={chatToUser.image}></img><h1>{chatToUser.name}</h1></div>
-            <div className="h-[26rem] bg-gray-200">
+            <div className="w-full h-[26rem] bg-gray-200">
                 <ShowChats />
             </div>
 
