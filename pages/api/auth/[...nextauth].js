@@ -15,9 +15,5 @@ export const authOptions = {
             secret:process.env.NEXTAUTH_SECRET,
         }
     },
-    callbacks: {
-        signIn: 'https://chitchat-rcqe.onrender.com/api/auth/callback/google',
-    },
-
 }
 export default NextAuth(authOptions);
