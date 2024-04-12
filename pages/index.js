@@ -16,7 +16,7 @@ export default function Home({data}) {
   useEffect(()=>{
     setUserData(data);
     localStorage.setItem("Users",JSON.stringify(data));
-    console.log("at index",data);
+    //console.log("at index",data);
   },[data]);
   //userdata && console.log("index",userdata);
   const use = useMemo(()=>{

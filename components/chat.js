@@ -5,15 +5,21 @@ import { useContext, useEffect, useState } from "react";
 //import FriendsList from "./friendsList";
 import { pool } from "@/pages/_app";
 import axios from "axios";
+import { socket } from "./callSocket";
 
 export default function Chat(){
     const [toggleLogout,setToggleLogout] = useState(false);
 
     const {data,status} = useSession();
     const {setUser,toggle,setToggle} = useContext(pool);
+
     useEffect(()=>{
         data && setUser(data?.user); 
         data && AddNewUser(data);
+    },[data])
+
+    useEffect(()=>{
+        socket.emit('getUser',JSON.stringify(data));
     },[data])
     
     if(status == 'loading') return <div>{"...Loading"}</div>

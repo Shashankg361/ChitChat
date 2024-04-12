@@ -19,7 +19,7 @@ export async function socketfunc(chatToUser,setChats){
     socket.off(`${chatToUser?.collection}`);
     socket.on(`${chatToUser?.collection}`,(message)=>{
         const newMessage = JSON.parse(message);
-        console.log("newM",newMessage);
+        //console.log("newM",newMessage);
         setChats(prevMessages => [...prevMessages, newMessage]);
     })
 }

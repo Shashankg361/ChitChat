@@ -6,13 +6,12 @@ import { useContext, useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import useSWR from "swr"
+import { socket } from "./callSocket";
 
 async function fetcher([_,user]){
     try{
-        //console.log("at request",user);
         const response = await axios.post("/api/getRequest",{email:user.email});
         const data = response.data;
-        //console.log("API response",data.data);
         return data.data;
     }catch(error){
         return error;
@@ -23,7 +22,17 @@ export default function GetRequest(){
     const {user,updateFriendsList,setUpdateFriendsList} = useContext(pool);
     const {data,error} = useSWR((['request',user]),fetcher);
     const [requestList,setRequestList] = useState();
-    //console.log("gandu",data)
+
+    useEffect(()=>{
+        socket.on('Request',(request)=>{
+            const changeInRequest = JSON.parse(request);
+            if(changeInRequest.change.operationType == 'delete'){
+                setRequestList(changeInRequest.data);
+            }else if(changeInRequest.change.operationType == 'insert'){
+                setRequestList(prevData=>[...prevData,changeInRequest.change.fullDocument]);
+            }
+        })
+    },[])
 
     useEffect(()=>{
         setRequestList(data);

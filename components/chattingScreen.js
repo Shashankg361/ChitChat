@@ -8,8 +8,6 @@ import { toast } from "react-toastify";
 import { io } from "socket.io-client";
 import ShowChats from "./showChats";
 
-const date = new Date();
-
 export default function ChattingScreen(){
     const {chatToUser,user,chats,setChats} = useContext(pool);
     const {register,handleSubmit,setValue} = useForm();
@@ -25,6 +23,7 @@ export default function ChattingScreen(){
     },[chatToUser]);
 
     const submit = async(formData)=>{
+        const date = new Date();
         const storeMessage = {
             To: chatToUser?.email,
             message:formData.Message,
