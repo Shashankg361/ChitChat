@@ -3,16 +3,14 @@ import { faCheck, faX } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import useSWR from "swr"
 
 async function fetcher([_,user]){
     try{
-        //console.log("at request",user);
         const response = await axios.post("/api/getRequest",{email:user.email});
         const data = response.data;
-        //console.log("API response",data.data);
         return data.data;
     }catch(error){
         return error;
@@ -20,18 +18,19 @@ async function fetcher([_,user]){
 } 
 
 export default function GetRequest(){
-    const {user,updateFriendsList,setUpdateFriendsList} = useContext(pool);
-    const {data,error} = useSWR((['request',user]),fetcher);
+    const {user,updateFriendsList,setUpdateFriendsList,setToggle} = useContext(pool);
+    const {data,error} = useSWR((['request',user]),fetcher,{ refreshInterval: 5000 });
     const [requestList,setRequestList] = useState();
-    //console.log("gandu",data)
 
     useEffect(()=>{
+        console.log("newData at Request using SWR",data);
         setRequestList(data);
     },[data]);
 
     async function acceptor(addFriend){
         try{const response = await axios.post("api/addfriend",{user,addFriend});
             const data = response.data;
+            setToggle(true);
             toast.success(`${data.Message}`);
         }catch(error){
             toast.error('Error while fetching data')
@@ -58,7 +57,7 @@ export default function GetRequest(){
     return(<>
             {!requestList && <div className="flex items-center"><h1 className="font-bold text-lg">Loading...</h1></div> }
             <div className="flex w-full items-center justify-center">
-                <ToastContainer className={"absolute top-10 left-1/2"}/>
+            
                 <div className="border-2 rounded-lg shadow-2xl shadow-black p-4">
                     {requestList?.length>0 && data.map((element,index)=>{
                         return(

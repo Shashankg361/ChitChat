@@ -1,7 +1,5 @@
 import { pool } from "@/pages/_app";
 import { useContext, useEffect, useRef, useState } from "react";
-import { toast } from "react-toastify";
-//import { io } from "socket.io-client";
 import { socket, socketfunc } from "./callSocket";
 
 export default function ShowChats(){
@@ -18,7 +16,6 @@ export default function ShowChats(){
 
     useEffect(()=>{
         if (chatToUser && socket) {
-            console.log("at UseEffect with socketFUNC", chatToUser);
             socket.emit('user-changed', JSON.stringify(chatToUser.collection));
         }
     },[chatToUser,socket]);

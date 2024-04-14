@@ -8,10 +8,8 @@ import { toast } from "react-toastify";
 import { io } from "socket.io-client";
 import ShowChats from "./showChats";
 
-const date = new Date();
-
 export default function ChattingScreen(){
-    const {chatToUser,user,chats,setChats} = useContext(pool);
+    const {chatToUser,user,setChats} = useContext(pool);
     const {register,handleSubmit,setValue} = useForm();
 
     async function getChat(){
@@ -25,6 +23,7 @@ export default function ChattingScreen(){
     },[chatToUser]);
 
     const submit = async(formData)=>{
+        const date = new Date();
         const storeMessage = {
             To: chatToUser?.email,
             message:formData.Message,
@@ -32,12 +31,9 @@ export default function ChattingScreen(){
             Time:date,
         }
         setValue('Message','');
-        // console.log("sending message",storeMessage);
-        // console.log("ChatoUser",chatToUser);
 
         try{
             const response = await axios.post('api/sendMessage',{storeMessage,collectionName:chatToUser?.collection});
-            console.log("At Message response",response.data.Message);
             toast.success(response.data.Message);
         }catch(error){
             toast.error(`Error occured ${error}`);
