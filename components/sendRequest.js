@@ -2,7 +2,8 @@ import { pool } from "@/pages/_app"
 import axios from "axios";
 import { useContext, useEffect, useState } from "react"
 import { useForm } from "react-hook-form";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function SendRequest(){
 
@@ -67,7 +68,7 @@ export default function SendRequest(){
 
     return(
         <div className="w-full flex flex-col items-center justify-center">
-            <ToastContainer className={"absolute top-10 left-1/2"}/>
+            
             <form onSubmit={handleSubmit(submit)}>
                 <input type="text" className="p-2 m-2 border-2 rounded-xl" placeholder="Enter mail_id" {...register("Request" , {required:"This feild is required",
                         pattern:{

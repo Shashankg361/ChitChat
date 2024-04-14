@@ -2,29 +2,29 @@ import { pool } from "@/pages/_app"
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import { useContext, useEffect, useState } from "react"
-import { socket } from "./callSocket";
+import useSWR from 'swr';
 
-export default function FriendsList(){
-    const {updateFriendsList,setShowComponent,setChatToUser,toggle,setToggle} = useContext(pool);
-    const {data} = useSession();
-    const [dataList , setdataList] = useState();
-
-    const email = data?.user?.email;
-    async function friendsList(){
+async function fetcher([_,email]){
+    try{
         const response = await axios.post("/api/getFriendsList",{email});
         const List = response.data;
-        setdataList(List.data);
+        return List.data
+    }catch(error){
+        return error;
     }
+}
+
+export default function FriendsList(){
+    const {setShowComponent,setChatToUser,toggle,setToggle} = useContext(pool);
+    const {data} = useSession();
+    const [dataList , setdataList] = useState();
+    const email = data?.user?.email;
+    const {data:friendList , error} = useSWR(['friends',email],fetcher,{ refreshInterval: 5000 })
 
     useEffect(()=>{
-        socket.on('Friends',(newfriend)=>{
-            setdataList(prevData=>[...prevData,newfriend]);
-        })
-    },[]);
-
-    useEffect(()=>{
-        data && friendsList();
-    },[data,updateFriendsList])
+        console.log("at friends seetting somti8hingoi",friendList);
+        setdataList(friendList);
+    },[friendList]);
 
     function setStatesFunc(element){
         setShowComponent("chattingScreen");

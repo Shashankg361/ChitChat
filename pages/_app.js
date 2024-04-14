@@ -21,7 +21,7 @@ export default function App({ Component, pageProps }) {
       <pool.Provider value={{userdata,setUserData,user,setUser,updateFriendsList,setUpdateFriendsList,showComponent,setShowComponent
         ,chatToUser,setChatToUser,chats,setChats,toggle,setToggle,
       }}>
-        {isClient && <ToastContainer />}
+        {isClient && <ToastContainer className={"absolute top-10 left-1/2"} />}
         <Component {...pageProps} />
       </pool.Provider> 
     </SessionProvider>

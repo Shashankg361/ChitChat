@@ -1,7 +1,7 @@
 import { faArrowRightFromBracket, faBars, faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { signOut, useSession } from "next-auth/react";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 //import FriendsList from "./friendsList";
 import { pool } from "@/pages/_app";
 import axios from "axios";
@@ -9,18 +9,14 @@ import { socket } from "./callSocket";
 
 export default function Chat(){
     const [toggleLogout,setToggleLogout] = useState(false);
-
     const {data,status} = useSession();
     const {setUser,toggle,setToggle} = useContext(pool);
+    const memorize = useMemo(()=>data,[data?.user]);
 
     useEffect(()=>{
         data && setUser(data?.user); 
         data && AddNewUser(data);
-    },[data])
-
-    useEffect(()=>{
-        socket.emit('getUser',JSON.stringify(data));
-    },[data])
+    },[memorize])
     
     if(status == 'loading') return <div>{"...Loading"}</div>
 
