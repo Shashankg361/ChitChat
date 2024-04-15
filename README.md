@@ -1,5 +1,10 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+## [Demo](https://chitchat-rcqe.onrender.com/)
+
+Brief about this project, It's a one-to-one chatting web-appllication, with features sending request, accepting request and than Live chatting as well you can get pervious messages too.
+Stack used Next.js, MongoDB, Socket.io and TailwindCSS.
+
 ## Getting Started
 
 First, run the development server:
