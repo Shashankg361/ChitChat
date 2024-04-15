@@ -3,7 +3,9 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 ## [Demo](https://chitchat-rcqe.onrender.com/)
 
 Brief about this project, It's a one-to-one chatting web-appllication, with features sending request, accepting request and than Live chatting as well you can get pervious messages too.
+This web-app has easy Google login and logout, It's safe and simple. for google login used Next_Auth.
 Stack used Next.js, MongoDB, Socket.io and TailwindCSS.
+This project is deployed on render.com not on vercel because Socket.io doesn't works on Vercel.
 
 ## Getting Started
 
